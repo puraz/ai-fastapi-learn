@@ -1,3 +1,4 @@
+from app.core.config import settings
 from app.schemas.chat import (
     ChatRequest,
     ChatResponse,
@@ -9,8 +10,9 @@ import asyncio
 import uuid
 
 async def chat_with_ai(request: ChatRequest) -> ChatResponse:
-    asyncio.sleep(0.5)
+    await asyncio.sleep(0.5)
     latest_user_message = get_latest_user_message(request)
+    model = request.model or settings.default_model
     
     if "AI Agent" in latest_user_message:
            answer = "AI Agent 是能够理解目标、规划步骤、调用工具并根据结果完成任务的智能体。"
@@ -32,7 +34,7 @@ async def chat_with_ai(request: ChatRequest) -> ChatResponse:
     
     return ChatResponse(
         answer=answer,
-        model = request.model,
+        model = model,
         session_id = request.session_id or f"s_{uuid.uuid4().hex[:8]}",
         message_id=f"m_{uuid.uuid4().hex[:8]}",
         usage=usage,

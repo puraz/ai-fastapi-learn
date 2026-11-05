@@ -1,6 +1,6 @@
 import uuid
 
-from app.schemas.chat import ChatMessage, MessageRole
+from app.repositories.conversation_repository import conversation_repository
 from app.schemas.conversation import (
     ConversationCreateRequest,
     ConversationMessagesResponse,
@@ -9,24 +9,22 @@ from app.schemas.conversation import (
 
 
 async def create_conversation(request: ConversationCreateRequest) -> ConversationResponse:
+    conversation_id = f"c_{uuid.uuid4().hex[:8]}"
+
+    res = await conversation_repository.create(
+        conversation_id = conversation_id,
+        request = request
+    )
     return ConversationResponse(
-        conversation_id=f"c_{uuid.uuid4().hex[:8]}",
-        title=request.title,
+        conversation_id = res.get("conversation_id"),
+        title=res.get("title")
     )
 
 async def get_conversation_messages(
     conversation_id: str
 ) -> ConversationMessagesResponse:
+    messages = await conversation_repository.get_messages(conversation_id)
     return ConversationMessagesResponse(
         conversation_id=conversation_id,
-        messages=[
-            ChatMessage(
-                role=MessageRole.USER,
-                content="什么是 AI Agent？"
-            ),
-            ChatMessage(
-                role=MessageRole.ASSISTANT,
-                content="AI Agent 是能够调用工具完成任务的智能体。"
-            )
-        ]
+        messages=messages
     )

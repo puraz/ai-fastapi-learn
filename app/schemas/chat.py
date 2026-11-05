@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 from enum import Enum
 from typing import Any
+from app.core.config import settings
 
 # 消息的角色
 class MessageRole(str, Enum):
@@ -43,7 +44,7 @@ class ChatRequest(BaseModel):
 
     @field_validator("model")
     def validate_model(cls, value: str) -> str:
-        supported_models = ["deepseek-chat", "qwen-plus", "gpt-4o-mini"]
+        supported_models = settings.supported_model_list
         if value not in supported_models:
             raise ValueError(f"不支持的模型：{value}")
 
