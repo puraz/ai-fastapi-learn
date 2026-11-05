@@ -6,7 +6,7 @@ from app.schemas.conversation import (
     ConversationResponse,
 )
 from app.schemas.response import ApiResponse
-from app.service.conversation_service import create_conversation, get_conversation_messages
+from app.services.conversation_service import create_conversation, get_conversation_messages
 
 
 router = APIRouter()

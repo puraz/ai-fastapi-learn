@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Path, Query, Body
 from app.schemas.chat import ChatRequest, ChatResponse, GenerateTitleRequest, GenerateTitleResponse
-from app.service.chat_service import chat_with_ai
+from app.services.chat_service import chat_with_ai
 from app.schemas.response import ApiResponse
 
 router = APIRouter()

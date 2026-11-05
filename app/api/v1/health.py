@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
@@ -6,7 +6,7 @@ router = APIRouter()
 async def health():
     return {
         "status": "ok",
-        "service": "ai-agent-course",
+        "services": "ai-agent-course",
         "version": "0.1.0"
     }
 

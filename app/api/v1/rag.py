@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.schemas.rag import RAGQueryRequest, RAGQueryResponse
 from app.schemas.response import ApiResponse
-from app.service.rag_service import query_rag
+from app.services.rag_service import query_rag
 
 router = APIRouter()
 
